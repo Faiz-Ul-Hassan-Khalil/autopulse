@@ -1,0 +1,39 @@
+===========================================================================
+CLEANING MAIN DATASET: Pakistan_Used_Cars.csv
+===========================================================================
+Initial raw rows: 78,630
+After dropping null Price (PKR): 77,009 (-1,621)
+After removing exact/near duplicates: 63,959 (-13,050)
+After filtering Model Year [1980..2026]: 63,865 (-94)
+After cleaning Engine Capacity bounds (cc [600..7000], kWh [15..200]): 63,777 (-88)
+After filtering extreme Price typos [200K..150M PKR]: 63,735 (-42)
+
+FINAL CLEAN PAKWHEELS SHAPE: 63,735 rows x 13 cols
+Unique Makes: 78 | Unique Models: 553 | Unique Variants: 1387
+
+Top 15 Makes after parsing:
+make
+Toyota           17971
+Suzuki           17946
+Honda            12958
+Daihatsu          2781
+KIA               1926
+Hyundai           1854
+Nissan            1529
+Changan            773
+Haval              758
+Mitsubishi         754
+MG                 681
+Mercedes-Benz      599
+Jaecoo             359
+Audi               300
+BYD                254
+
+===========================================================================
+CLEANING NLP DATASET: olx_used_cars.csv
+===========================================================================
+Initial raw rows: 9,179
+After removing exact duplicates: 8,973 (-206)
+FINAL CLEAN OLX SHAPE: 8,973 rows x 13 cols
+
+Saved cleaned datasets to data/processed/ successfully.
