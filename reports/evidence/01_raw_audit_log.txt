@@ -1,0 +1,195 @@
+[Pakistan_Used_Cars.csv] Dropping index-like columns: ['Unnamed: 0']
+[BMW_Cars_Pakistan.csv] Dropping index-like columns: ['Unnamed: 0']
+[olx_used_cars.csv] Dropping index-like columns: ['Unnamed: 0']
+===========================================================================
+DATASET: Pakistan_Used_Cars.csv | Shape: 78,630 rows x 9 cols
+Columns: ['Car Name', 'Auction Rating', 'Model Year', 'Mileage', 'Fuel Type', 'Engine Capacity', 'Transmission', 'Engine Unit', 'Price (PKR)']
+===========================================================================
+
+--- Column Summary ---
+                   dtype  null_count  null_pct  n_unique
+Car Name             str           0      0.00      9015
+Auction Rating   float64       73683     93.71        81
+Model Year         int64           0      0.00        68
+Mileage            int64           0      0.00     10235
+Fuel Type            str           0      0.00         8
+Engine Capacity  float64           0      0.00       270
+Transmission         str           0      0.00         2
+Engine Unit          str           0      0.00         2
+Price (PKR)      float64        1621      2.06      2340
+
+--- Numeric Summary ---
+                   count          mean           std       min        25%        50%        75%          max
+Auction Rating    4947.0  7.993107e+00  1.650243e+00       1.6        7.0        8.4        9.3         10.0
+Model Year       78630.0  2.014587e+03  8.689690e+00    1900.0     2009.0     2017.0     2021.0       2026.0
+Mileage          78630.0  9.755602e+04  8.699707e+04       1.0    43500.0    85000.0   130000.0    1000000.0
+Engine Capacity  78630.0  1.451490e+03  7.840011e+02       0.0     1000.0     1300.0     1800.0      15000.0
+Price (PKR)      77009.0  5.236257e+06  8.340614e+06  120000.0  1990000.0  3400000.0  5700000.0  945000000.0
+
+Exact full-row duplicates: 13,849 (17.61%)
+
+Non-numeric price strings coerced to NaN: 0
+
+--- Price Quantiles (Price (PKR)) [Valid numeric: 77,009] ---
+    0.0% : 120,000
+    0.5% : 320,000
+    1.0% : 390,000
+    5.0% : 750,000
+   50.0% : 3,400,000
+   95.0% : 14,700,000
+   99.0% : 39,000,000
+   99.5% : 60,500,000
+  100.0% : 945,000,000
+  Zero or negative prices: 0
+
+===========================================================================
+DATASET: BMW_Cars_Pakistan.csv | Shape: 344 rows x 9 cols
+Columns: ['Car Name', 'Auction Rating', 'Model Year', 'Mileage', 'Fuel Type', 'Engine Capacity', 'Transmission', 'Engine Unit', 'Price (PKR)']
+===========================================================================
+
+--- Column Summary ---
+                   dtype  null_count  null_pct  n_unique
+Car Name             str           0      0.00       142
+Auction Rating   float64         317     92.15        16
+Model Year         int64           0      0.00        31
+Mileage            int64           0      0.00       170
+Fuel Type            str           0      0.00         5
+Engine Capacity  float64           0      0.00        35
+Transmission         str           0      0.00         2
+Engine Unit          str           0      0.00         2
+Price (PKR)      float64          47     13.66       152
+
+--- Numeric Summary ---
+                 count          mean           std        min        25%        50%         75%         max
+Auction Rating    27.0  8.485185e+00  9.342639e-01        6.5        7.8        8.7         9.2         9.8
+Model Year       344.0  2.015180e+03  7.858595e+00     1992.0     2007.0     2017.0      2022.0      2026.0
+Mileage          344.0  7.673069e+04  7.888760e+04       15.0    15000.0    62000.0    120000.0    750000.0
+Engine Capacity  344.0  1.813706e+03  1.533063e+03       64.0      105.0     1500.0      3000.0      8120.0
+Price (PKR)      297.0  1.987818e+07  1.968977e+07  1850000.0  5500000.0  9500000.0  27700000.0  73000000.0
+
+Exact full-row duplicates: 88 (25.58%)
+
+Non-numeric price strings coerced to NaN: 0
+
+--- Price Quantiles (Price (PKR)) [Valid numeric: 297] ---
+    0.0% : 1,850,000
+    0.5% : 2,048,000
+    1.0% : 2,100,000
+    5.0% : 3,240,000
+   50.0% : 9,500,000
+   95.0% : 63,340,000
+   99.0% : 69,900,000
+   99.5% : 71,512,000
+  100.0% : 73,000,000
+  Zero or negative prices: 0
+
+===========================================================================
+DATASET: olx_used_cars.csv | Shape: 9,179 rows x 16 cols
+Columns: ['Price', 'Make', 'Model', 'Year', "KM's driven", 'Fuel', 'Registration city', 'Car documents', 'Assembly', 'Transmission', 'Condition', 'Seller Location', 'Description', 'Car Features', "Images URL's", 'Car Profile']
+===========================================================================
+
+--- Column Summary ---
+                   dtype  null_count  null_pct  n_unique
+Price              int64           0      0.00       842
+Make                 str           0      0.00        11
+Model                str           0      0.00        58
+Year               int64           0      0.00        27
+KM's driven        int64           0      0.00      1598
+Fuel                 str           0      0.00         4
+Registration city    str           0      0.00        61
+Car documents        str           0      0.00         2
+Assembly             str           0      0.00         2
+Transmission         str           0      0.00         2
+Condition            str           0      0.00         1
+Seller Location      str           0      0.00      2768
+Description          str           0      0.00      8866
+Car Features         str           0      0.00      5978
+Images URL's         str           0      0.00      8976
+Car Profile          str         458      4.99      8524
+
+--- Numeric Summary ---
+              count          mean           std       min        25%        50%        75%        max
+Price        9179.0  2.036814e+06  1.159302e+06  185000.0  1025000.0  1820000.0  2750000.0  5000000.0
+Year         9179.0  2.012269e+03  6.043902e+00    1989.0     2007.0     2013.0     2017.0     2024.0
+KM's driven  9179.0  9.657042e+04  6.198325e+04       1.0    53000.0    92000.0   125000.0   533528.0
+
+Exact full-row duplicates: 201 (2.19%)
+
+Non-numeric price strings coerced to NaN: 0
+
+--- Price Quantiles (Price) [Valid numeric: 9,179] ---
+    0.0% : 185,000
+    0.5% : 424,450
+    1.0% : 460,000
+    5.0% : 625,000
+   50.0% : 1,820,000
+   95.0% : 4,300,000
+   99.0% : 4,850,000
+   99.5% : 4,950,000
+  100.0% : 5,000,000
+  Zero or negative prices: 0
+
+===========================================================================
+PAKWHEELS SPECIFIC CHECKS (MAIN vs BMW)
+===========================================================================
+BMW rows with valid keys: 228 / 344
+BMW rows (valid keys) also in Main: 106 / 228
+BMW cars inside Main by name prefix: 345
+Main near-duplicates (all cols except Auction Rating): 13,853
+
+--- Engine Unit Counts (Main) ---
+Engine Unit
+cc     77510
+kWh     1120
+
+--- Fuel Type Counts (Main) ---
+Fuel Type
+Petrol      66765
+Hybrid       5962
+Diesel       2971
+Electric     1111
+PHEV          920
+CNG           529
+LPG           247
+REEV          125
+
+--- Engine Capacity Min/Median/Max by Engine Unit ---
+             count    min  median      max
+Engine Unit                               
+cc           77510  100.0  1300.0  15000.0
+kWh           1120    0.0    64.5   9600.0
+
+Rows where ' <Model Year> ' cleanly splits Car Name: 100.00%
+
+===========================================================================
+OLX SPECIFIC CHECKS
+===========================================================================
+
+--- Fuel ---
+Fuel
+Petrol    8984
+CNG        193
+Hybrid       1
+Diesel       1
+
+--- Assembly ---
+Assembly
+Local       5999
+Imported    3180
+
+--- Transmission ---
+Transmission
+Manual       5633
+Automatic    3546
+
+--- Condition ---
+Condition
+Used    9179
+
+--- Car documents ---
+Car documents
+Original     9111
+Duplicate      68
+
+Unique comma-separated tags in 'Car Features': 28
+Sample tags: ['ABS', 'AM/FM Radio', 'Air Bags', 'Air Conditioning', 'Alloy Rims', 'CD Player', 'Cassette Player', 'Climate Control', 'Cool Box', 'Cruise Control', 'DVD Player', 'Front Camera', 'Front Speakers', 'Heated Seats', 'Immobilizer Key']
