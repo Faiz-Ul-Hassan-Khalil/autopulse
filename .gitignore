@@ -228,4 +228,4 @@ data/raw/*.csv
 data/processed/*.csv
 *.joblib
 *.pkl
-.env
+.envmodels/*.joblib
