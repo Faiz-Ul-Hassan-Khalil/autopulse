@@ -208,7 +208,7 @@ def clean_olx(df: pd.DataFrame) -> pd.DataFrame:
 if __name__ == "__main__":
     df_main_raw = load_raw("Pakistan_Used_Cars.csv")
     df_main_clean = clean_pakwheels(df_main_raw)
-    df_main_clean.to_csv(PROCESSED_DIR / "pakwheels_clean.csv", index=False)
+    df_main_clean.to_csv(PROCESSED_DIR / "pakistan_cars_clean.csv", index=False)
 
     df_olx_raw = load_raw("olx_used_cars.csv")
     df_olx_clean = clean_olx(df_olx_raw)

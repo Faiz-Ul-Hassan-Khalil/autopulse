@@ -1,0 +1,36 @@
+===========================================================================
+AUTOPULSE STEP 3: QUANTITATIVE EDA SUMMARY
+===========================================================================
+Total Clean Pakistan Used Cars Records: 63,735
+Raw Price Skewness: 6.998 | Log Price Skewness: 0.124
+Median Price: PKR 3,080,000 (30.80 Lacs)
+IQR Price (25th - 75th): PKR 1,750,000 to 5,080,000
+
+--- Top Correlations with log_price ---
+log_price                1.000000
+model_year               0.678503
+engine_cc                0.563363
+battery_kwh              0.154177
+is_electric_unit         0.146665
+auction_rating_filled    0.135883
+has_auction_rating       0.113335
+mileage                 -0.287337
+car_age                 -0.678503
+
+--- Median Price (PKR Lacs) by Fuel Type ---
+           count   median        mean
+fuel_type                            
+PHEV         508  109.000  150.101161
+REEV          50  106.000  106.276600
+Electric     555   92.000  149.728739
+Diesel      2071   74.000   88.086065
+Hybrid      4245   52.000   69.753524
+Petrol     55566   28.000   39.945851
+CNG          496    9.075    9.890101
+LPG          244    6.925    7.369221
+
+--- Median Price (PKR Lacs) by Transmission ---
+              count  median       mean
+transmission                          
+Automatic     37546    45.5  63.404862
+Manual        26189    15.7  18.669304
