@@ -229,3 +229,13 @@ data/processed/*.csv
 *.joblib
 *.pkl
 .envmodels/*.joblib
+
+# Frontend build & dependencies
+node_modules/
+dist/
+
+# Ignore virtual environment
+.venv/
+
+# Ignore heavy machine learning models
+models/*.joblib

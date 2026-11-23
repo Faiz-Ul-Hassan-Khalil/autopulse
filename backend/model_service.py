@@ -1,39 +1,70 @@
-"""model_service.py - loads the saved models ONCE and turns requests into predictions."""
+"""model_service.py - loads all 3 team members' saved models ONCE and serves predictions."""
 import joblib
 import pandas as pd
 
 from backend.config import (
     DATA_PATH,
     DEAL_BELOW_PCT,
-    DT_PATH,
     ELECTRIC_FUEL,
-    METRICS_PATH,
+    MODELS_DIR,
     OVERPRICED_ABOVE_PCT,
     RANGE_PCT,
-    RF_PATH,
+    ROOT,
 )
 from backend.schemas import PredictRequest, PredictResponse, PriceRange, Verdict
-# Same feature code as training -> no train/serve mismatch.
 from src.features.dataset import FEATURE_COLS, add_features
+
+EVIDENCE_DIR = ROOT / "reports" / "evidence"
+
+TEAM_MODELS = {
+    "faiz": {
+        "label": "Faiz — Random Forest + Decision Tree",
+        "regressor": MODELS_DIR / "faiz_rf_regressor.joblib",
+        "classifier": MODELS_DIR / "faiz_dt_classifier.joblib",
+        "metrics": EVIDENCE_DIR / "faiz_metrics.csv",
+    },
+    "farhan": {
+        "label": "Farhan — Decision Tree (Reg + Clf)",
+        "regressor": MODELS_DIR / "farhan_dt_regressor.joblib",
+        "classifier": MODELS_DIR / "farhan_dt_classifier.joblib",
+        "metrics": EVIDENCE_DIR / "farhan_metrics.csv",
+    },
+    "ahmed": {
+        "label": "Ahmed — KNN (Reg + Clf)",
+        "regressor": MODELS_DIR / "ahmed_knn_regressor.joblib",
+        "classifier": MODELS_DIR / "ahmed_knn_classifier.joblib",
+        "metrics": EVIDENCE_DIR / "ahmed_metrics.csv",
+    },
+}
 
 
 class ModelService:
     def __init__(self):
-        for p in (RF_PATH, DT_PATH, DATA_PATH):
-            if not p.exists():
-                raise FileNotFoundError(f"Required file missing: {p}")
-        self.regressor = joblib.load(RF_PATH)
-        self.classifier = joblib.load(DT_PATH)
-        expected = list(self.regressor.feature_names_in_)
-        if expected != FEATURE_COLS:
-            raise RuntimeError(
-                "Saved model features differ from dataset.FEATURE_COLS.\n"
-                f"model: {expected}\ncode : {FEATURE_COLS}\n"
-                "Retrain the models or fix FEATURE_COLS."
-            )
+        if not DATA_PATH.exists():
+            raise FileNotFoundError(f"Required dataset missing: {DATA_PATH}")
+
+        self.bundles = {}
+        for author, spec in TEAM_MODELS.items():
+            for key in ("regressor", "classifier"):
+                if not spec[key].exists():
+                    raise FileNotFoundError(f"Missing {author} {key}: {spec[key]}")
+            reg = joblib.load(spec["regressor"])
+            clf = joblib.load(spec["classifier"])
+            expected = list(reg.feature_names_in_)
+            if expected != FEATURE_COLS:
+                raise RuntimeError(
+                    f"{author} model features differ from dataset.FEATURE_COLS.\n"
+                    f"model: {expected}\ncode : {FEATURE_COLS}"
+                )
+            self.bundles[author] = {
+                "label": spec["label"],
+                "regressor": reg,
+                "classifier": clf,
+                "metrics_path": spec["metrics"],
+            }
+
         self.catalog = self._build_catalog()
 
-    # ---------- dropdown data for the frontend form ----------
     def _build_catalog(self) -> dict:
         df = pd.read_csv(
             DATA_PATH,
@@ -48,14 +79,13 @@ class ModelService:
                     "variants": sorted(g_model["variant"].unique().tolist()),
                     "typical_engine_cc": float(non_ev.median()) if len(non_ev) else None,
                 }
-        order = df["make"].value_counts().index.tolist()      # most common brands first
+        order = df["make"].value_counts().index.tolist()
         return {"makes": order, "models": catalog}
 
     def _canonical(self, value: str, options) -> str | None:
         v = value.strip().lower()
         return next((o for o in options if o.lower() == v), None)
 
-    # ---------- prediction ----------
     def predict(self, req: PredictRequest) -> PredictResponse:
         warnings = []
         cat = self.catalog["models"]
@@ -97,9 +127,13 @@ class ModelService:
         }])
         X = add_features(row)[FEATURE_COLS]
 
-        price = float(self.regressor.predict(X)[0])
-        band = str(self.classifier.predict(X)[0])
+        bundle = self.bundles[req.author]
+        price = float(bundle["regressor"].predict(X)[0])
+        band = str(bundle["classifier"].predict(X)[0])
+
         resp = PredictResponse(
+            author=req.author,
+            model_label=bundle["label"],
             predicted_price_pkr=round(price, -3),
             price_range=PriceRange(
                 low=round(price * (1 - RANGE_PCT), -3),
@@ -134,7 +168,21 @@ class ModelService:
         )
 
     def model_info(self) -> dict:
-        if not METRICS_PATH.exists():
-            return {"available": False}
-        m = pd.read_csv(METRICS_PATH)
-        return {"available": True, "metrics": m.to_dict(orient="records")}
+        team_metrics = {}
+        all_rows = []
+        for author, bundle in self.bundles.items():
+            p = bundle["metrics_path"]
+            if p.exists():
+                m = pd.read_csv(p)
+                records = m.astype(object).where(pd.notnull(m), None).to_dict(orient="records")
+                team_metrics[author] = {
+                    "label": bundle["label"],
+                    "metrics": records,
+                }
+                for r in records:
+                    all_rows.append({"author": author, **r})
+        return {
+            "available": len(all_rows) > 0,
+            "team": team_metrics,
+            "metrics": all_rows,
+        }
