@@ -5,8 +5,8 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]            # project root (autopulse/)
 DATA_PATH = ROOT / "data" / "processed" / "pakistan_cars_clean.csv"
 MODELS_DIR = ROOT / "models"
-RF_PATH = MODELS_DIR / "rf_regressor.joblib"          # price regression model
-DT_PATH = MODELS_DIR / "dt_classifier.joblib"         # price band classifier
+RF_PATH = MODELS_DIR / "faiz_rf_regressor.joblib"          # price regression model
+DT_PATH = MODELS_DIR / "faiz_dt_classifier.joblib"         # price band classifier
 METRICS_PATH = ROOT / "reports" / "evidence" / "faiz_metrics.csv"
 
 # Allowed values (must match the training data spelling)
