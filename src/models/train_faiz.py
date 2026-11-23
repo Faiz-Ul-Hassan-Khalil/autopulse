@@ -75,7 +75,7 @@ def plot_importance(rf_pipe, top=15):
     imp.plot.barh()
     plt.title("Random Forest - top feature importances")
     plt.tight_layout()
-    plt.savefig(RESULTS_DIR / "rf_feature_importance.png", dpi=150)
+    plt.savefig(RESULTS_DIR / "faiz_rf_feature_importance.png", dpi=150)
     plt.close()
 
 
@@ -133,11 +133,11 @@ def main(tune: bool):
 
     # error analysis + importance for the final forest
     pred = rf_pipe.predict(s.X_test)
-    error_by_group(s.y_reg_test, pred, s.y_clf_test).to_csv(RESULTS_DIR / "rf_error_by_band.csv")
+    error_by_group(s.y_reg_test, pred, s.y_clf_test).to_csv(RESULTS_DIR / "faiz_rf_error_by_band.csv")
     error_by_group(s.y_reg_test, pred, s.X_test["make"]).sort_values("count", ascending=False) \
-        .head(15).to_csv(RESULTS_DIR / "rf_error_by_make.csv")
+        .head(15).to_csv(RESULTS_DIR / "faiz_rf_error_by_make.csv")
     plot_importance(rf_pipe)
-    joblib.dump(rf_pipe, MODELS_DIR / "rf_regressor.joblib", compress=3)
+    joblib.dump(rf_pipe, MODELS_DIR / "faiz_rf_regressor.joblib", compress=3)
 
     # ================= CLASSIFICATION =================
     print()
@@ -149,9 +149,9 @@ def main(tune: bool):
                    s, scale=True)
 
     cm = band_confusion(s.y_clf_test, dt_clf.predict(s.X_test))
-    cm.to_csv(RESULTS_DIR / "dt_confusion_matrix.csv")
-    plot_confusion(cm, "Decision Tree - price band", "dt_confusion_matrix.png")
-    joblib.dump(dt_clf, MODELS_DIR / "dt_classifier.joblib", compress=3)
+    cm.to_csv(RESULTS_DIR / "faiz_dt_confusion_matrix.csv")
+    plot_confusion(cm, "Decision Tree - price band", "faiz_dt_confusion_matrix.png")
+    joblib.dump(dt_clf, MODELS_DIR / "faiz_dt_classifier.joblib", compress=3)
 
     save_metrics(rows)
     print(f"\nSaved: models/*.joblib and {RESULTS_DIR}/faiz_metrics.csv (+ plots)")

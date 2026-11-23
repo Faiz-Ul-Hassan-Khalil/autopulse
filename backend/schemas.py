@@ -1,5 +1,5 @@
 """schemas.py - request / response shapes (Pydantic validates every input)."""
-from typing import Dict, List, Optional
+from typing import Dict, List, Literal, Optional
 
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
@@ -8,9 +8,11 @@ from src.features.dataset import CURRENT_YEAR
 
 
 class PredictRequest(BaseModel):
-    # model_year starts with "model_", which pydantic reserves by default
     model_config = ConfigDict(protected_namespaces=())
 
+    author: Literal["faiz", "farhan", "ahmed"] = Field(
+        "faiz", description="Team member model bundle to use"
+    )
     make: str = Field(..., min_length=1, examples=["Toyota"])
     model: str = Field(..., min_length=1, examples=["Corolla"])
     variant: str = Field(..., min_length=1, examples=["GLi 1.3"])
@@ -51,6 +53,8 @@ class Verdict(BaseModel):
 
 
 class PredictResponse(BaseModel):
+    author: str
+    model_label: str
     predicted_price_pkr: int
     price_range: PriceRange
     price_band: str
