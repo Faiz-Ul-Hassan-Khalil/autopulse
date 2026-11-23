@@ -1,4 +1,4 @@
-# AutoPulse PK 🚗 - Used Car Fair-Value & Deal Analyzer
+# AutoPulse PK - Used Car Fair-Value & Deal Analyzer
 
 AutoPulse PK is a full-stack machine learning application designed to predict the fair market value of used cars in Pakistan. By leveraging historical listings (PakWheels, OLX), the system helps buyers and sellers bypass market volatility and information asymmetry to make data-driven pricing decisions.
 
@@ -6,7 +6,7 @@ This project was developed as a final academic submission for the University AI 
 
 ---
 
-## 🌟 Key Features
+## Key Features
 
 * **Dual-Model Inference:** Uses a combination of Regression (exact PKR price estimation) and Classification (market segmentation: Budget, Mid-range, Premium).
 * **Multi-Model Support:** Features three distinct ML pipelines built by team members, accessible via a dynamic model switcher in the UI.
@@ -15,7 +15,7 @@ This project was developed as a final academic submission for the University AI 
 
 ---
 
-## 🧠 Machine Learning Architecture
+## Machine Learning Architecture
 
 The system evaluates cars using a robust 13-feature pipeline trained with `StratifiedGroupKFold` to prevent relisting data leakage. 
 
@@ -26,7 +26,7 @@ The system evaluates cars using a robust 13-feature pipeline trained with `Strat
 
 ---
 
-## ⚠️ Prerequisites: Download the Models
+## Prerequisites: Download the Models
 
 To comply with GitHub's 100 MB file size limit, the trained `.joblib` models are hosted externally on Google Drive. **You must download these models before running the backend.**
 
@@ -36,7 +36,7 @@ To comply with GitHub's 100 MB file size limit, the trained `.joblib` models are
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 Ensure you have **Python 3.10+** and **Node.js** installed on your system.
 
@@ -68,7 +68,7 @@ Open a **new** terminal in the root directory:
 
 ---
 
-## 📄 Generating the Academic Report
+## Generating the Academic Report
 
 This repository includes a script to dynamically generate the final PDF project report based on the latest saved metrics and evaluation figures.
 
@@ -79,7 +79,7 @@ This will output `AutoPulse_Final_Project_Report.pdf` directly into the root dir
 
 ---
 
-## 📂 Project Structure
+## Project Structure
 
 autopulse/
 ├── backend/                  # FastAPI server and ML inference endpoints
